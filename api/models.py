@@ -40,15 +40,15 @@ class HmiGroup(models.Model):
     
 
 class HMI(models.Model):
-
     name = models.CharField(max_length=255)
-    group = models.ForeignKey(HmiGroup, on_delete=models.CASCADE, related_name="hmis")
+
+ 
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name="hmis")
+
+   
+    groups = models.ManyToManyField(HmiGroup, related_name="hmis", blank=True)
 
     assigned_workers = models.ManyToManyField(User, related_name="assigned_hmis", blank=True)
 
-    def __str__ (self):
+    def __str__(self):
         return self.name
-    
-    @property
-    def organization(self):
-        return self.group.organization
